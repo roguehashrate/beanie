@@ -16,49 +16,11 @@ USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 
 dnf upgrade -y
 
-dnf groupinstall -y "GNOME Desktop Environment" --setopt=group_package_types=mandatory,default
-
-dnf install -y \
-    firefox \
-    nautilus \
-    gnome-software \
-    gnome-text-editor \
-    gnome-terminal \
-    eog \
-    papers \
-    yelp \
-    abrt \
-    gnome-control-center \
-    gnome-maps \
-    gnome-calendar \
-    gnome-contacts \
-    gnome-weather \
-    gnome-music \
-    gnome-boxes \
-    gdm \
-    xorg-x11-server-Xorg \
-    xorg-x11-xinit \
-    mesa-dri-drivers \
-    gdm-branding-fonts \
-    adobe-source-sans-pro-fonts \
-    dejavu-sans-fonts \
-    liberation-sans-fonts \
-    pipewire pipewire-alsa pipewire-pulse wireplumber \
-    flatpak gnome-software-plugin-flatpak \
-    dbus polkit
-
-systemctl enable gdm
-systemctl set-default graphical.target
-
-if grep -q "^WaylandEnable=false" /etc/gdm/custom.conf; then
-    sed -i 's/^WaylandEnable=false/#WaylandEnable=false/' /etc/gdm/custom.conf
-fi
+dnf install -y opendoas
+echo "permit :wheel" > /etc/doas.conf
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub org.zenbrowser.Zen
-
-dnf install -y opendoas
-echo "permit :wheel" > /etc/doas.conf
 
 mkdir -p "$USER_HOME/.local/bin"
 chown -R "$USER_NAME:$USER_NAME" "$USER_HOME/.local"
@@ -81,4 +43,4 @@ EOL
 chown -R "$USER_NAME:$USER_NAME" "$USER_HOME/.config/pkgz"
 
 echo
-echo "[✓] Beanie bootstrap complete. Reboot recommended."
+echo "[✓] Beanie Budgie bootstrap complete. Reboot recommended."
