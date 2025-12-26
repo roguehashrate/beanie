@@ -15,20 +15,37 @@ fi
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 
 dnf upgrade -y
-dnf install -y dnf-plugins-core curl git
 
 dnf groupinstall -y "GNOME Desktop Environment" --setopt=group_package_types=mandatory,default
 
 dnf install -y \
-xorg-x11-server-Xorg xorg-x11-xinit mesa-dri-drivers \
-gdm gnome-shell gnome-session gdm-branding-fonts \
-adobe-source-sans-pro-fonts dejavu-sans-fonts liberation-sans-fonts \
-nautilus gnome-software gnome-text-editor gnome-terminal \
-eog yelp abrt gnome-control-center gnome-maps gnome-calendar gnome-contacts \
-gnome-weather gnome-music gnome-boxes \
-pipewire pipewire-alsa pipewire-pulse wireplumber \
-flatpak gnome-software-plugin-flatpak \
-dbus polkit
+    firefox \
+    nautilus \
+    gnome-software \
+    gnome-text-editor \
+    gnome-terminal \
+    eog \
+    papers \
+    yelp \
+    abrt \
+    gnome-control-center \
+    gnome-maps \
+    gnome-calendar \
+    gnome-contacts \
+    gnome-weather \
+    gnome-music \
+    gnome-boxes \
+    gdm \
+    xorg-x11-server-Xorg \
+    xorg-x11-xinit \
+    mesa-dri-drivers \
+    gdm-branding-fonts \
+    adobe-source-sans-pro-fonts \
+    dejavu-sans-fonts \
+    liberation-sans-fonts \
+    pipewire pipewire-alsa pipewire-pulse wireplumber \
+    flatpak gnome-software-plugin-flatpak \
+    dbus polkit
 
 systemctl enable gdm
 systemctl set-default graphical.target
@@ -63,8 +80,5 @@ command = "doas"
 EOL
 chown -R "$USER_NAME:$USER_NAME" "$USER_HOME/.config/pkgz"
 
-dnf install -y gedit gnome-terminal vlc
-dnf clean all
-rm -rf /var/cache/dnf
-
+echo
 echo "[✓] Beanie bootstrap complete. Reboot recommended."
