@@ -16,11 +16,11 @@ USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 
 dnf upgrade -y
 
-dnf install -y opendoas
+dnf install -y opendoas neovim htop zoxide
 echo "permit :wheel" > /etc/doas.conf
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub org.zenbrowser.Zen
+flatpak install -y flathub app.zen_browser.zen
 
 mkdir -p "$USER_HOME/.local/bin"
 chown -R "$USER_NAME:$USER_NAME" "$USER_HOME/.local"
