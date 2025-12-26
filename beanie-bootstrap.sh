@@ -16,14 +16,12 @@ USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 echo "[*] Configuring Beanie for user: $USER_NAME"
 
 dnf upgrade -y
-dnf install -y dnf-plugins-core curl git
+dnf install -y dnf-plugins-core curl git xorg-x11-server-Xorg xorg-x11-xinit mesa-dri-drivers
 
 dnf groupinstall -y "GNOME Desktop Environment" --setopt=group_package_types=mandatory,default
-dnf install -y xorg-x11-server-Xorg xorg-x11-xinit mesa-dri-drivers \
-gdm nautilus gnome-software gnome-text-editor gnome-terminal \
-eog yelp abrt gnome-control-center gnome-maps gnome-calendar \
-gnome-contacts gnome-weather gnome-music gnome-boxes \
-pipewire pipewire-alsa pipewire-pulse wireplumber \
+dnf install -y gdm nautilus gnome-software gnome-text-editor gnome-terminal \
+eog yelp abrt gnome-control-center gnome-maps gnome-calendar gnome-contacts \
+gnome-weather gnome-music gnome-boxes pipewire pipewire-alsa pipewire-pulse wireplumber \
 flatpak gnome-software-plugin-flatpak
 
 systemctl enable gdm
@@ -60,7 +58,6 @@ EOL
 chown -R "$USER_NAME:$USER_NAME" "$USER_HOME/.config/pkgz"
 
 dnf install -y gedit gnome-terminal vlc
-
 dnf clean all
 rm -rf /var/cache/dnf
 
